@@ -1,0 +1,112 @@
+<!-- připojení hlavičky -->
+<%- include("include/_header.ejs")%>
+<!-- /připojení hlavičky -->
+<nav
+        class="navbar nav-pills navbar-expand-md navbar-dark bg-dark sticky-top"
+      >
+        <div class="container">
+          <a class="navbar-brand" href="/"
+            ><img src="/img/home-insurance.png" alt="Pojištění" /> Pojistěte
+            se</a
+          >
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#hamburger"
+            aria-controls="hamburger"
+            aria-expanded="false"
+            aria-label="Zobrazit navigační lištu"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="hamburger">
+            <ul class="navbar-nav">
+              <li class="nav-item me-3">
+                <a class="nav-link p-2" href="/">O aplikaci</a>
+              </li>
+              <li class="nav-item me-3">
+                <a
+                  class="nav-link p-2"                  
+                  href="/pojistenci"
+                  >Pojištěnci</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active p-2" aria-current="page" href="/pojisteni">Pojištění</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+</header>
+<section class="my-5">
+    <div class="container">
+        <h4>Co vše lze pojistit</h4>
+        <div class="text-center my-3">
+            <button type="button"
+                 class="btn btn-primary px-3 py-2 btn.lg"                
+                data-bs-toggle="collapse"
+                data-bs-target="#dialog"
+                aria-controls="pridat-pojisteni" 
+                aria-expanded="false"               
+                >Přidat pojištění</button
+                >
+        </div>
+        <div class="collapse" id="dialog">
+            <div class="card card-body">
+                <form method="POST" action="/api/pojisteni" id="vytvorit-pojisteni" novalidate="novalidate">
+                    
+                    <div class="form-group mb-3 col-md-6">
+                    <label for="nazev" class="col-form-label">Název pojištění</label>                    
+                    <input type="text" class="form-control" name="nazev" 
+                    minlength="3" maxlength="50"  placeholder="Pojištění nemovitosti" required="required">
+                    <div class="invalid-feedback">Zadejte prosím název pojištění.</div>
+                    </div> 
+                    
+                    
+                    <div class="form-group mb-3">
+                    <label class="col-form-label" for="popis">Popis pojištění</label>
+                    <textarea class="form-control" name="popis"  cols="maxlength" rows="10" minlength="5" required="required" placeholder="Předmětem tohoto pojištění je..."></textarea>
+                    <div class="invalid-feedback">Zadejte prosím stručný popis pojištění.</div>
+                    </div>
+                    
+                    <div class="text-center">
+                    <button                    
+                    class="btn rounded-pill btn-primary px-4"
+                    type="submit"
+                    aria-label="Vytvořit pojištění"
+                    >
+                    Vytvořit pojištění
+                    </button></div>
+
+                    </form>
+                    
+                 </div>
+                </div> 
+                <div class="alerty text-center"></div>               
+                <div class="table-responsive my-3">
+                <table class="table table-hover">
+                  <% for(let i = 0; i < pojisteni.length; i++) {%>
+                  <tr>
+                    <td><a class="link-primary" href="/pojisteni/popis/?id=<%=pojisteni[i]._id%>"><%=pojisteni[i].nazev%></a></td>
+                    <td>
+                      <button class="btn btn-danger vymazat" data-id="<%=pojisteni[i]._id%>">Odebrat</button>
+                      <a class="btn btn-warning" href="/pojisteni/upravit/?id=<%=pojisteni[i]._id%>">Editovat</a>
+                    </td>
+                    </td>
+                  </tr>
+                  <%}%>
+                </table>
+              </div>
+              
+            </div>
+        </div>
+           
+    
+        </div>
+    </section>
+<!-- připojení patičky -->
+<%- include("include/_footer.ejs")%>
+<!-- /připojení patičky -->
